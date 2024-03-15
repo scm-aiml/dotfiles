@@ -470,6 +470,9 @@ require("lazy").setup({
 			--  into multiple repos for maintenance purposes.
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-path",
+            "hrsh7th/cmp-cmdline",
+            "onsails/lspkind-nvim",
+            'hrsh7th/cmp-nvim-lsp-signature-help',
 
 			-- If you want to add a bunch of pre-configured snippets,
 			--    you can use this plugin to help you. It even has snippets
@@ -481,6 +484,7 @@ require("lazy").setup({
 			-- See `:help cmp`
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
+			local lspkind = require("lspkind")
 			luasnip.config.setup({})
 
 			cmp.setup({
@@ -534,10 +538,45 @@ require("lazy").setup({
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
 					{ name = "path" },
+					{ name = "nvim_lsp_signature_help"},
 				},
+				formatting = {
+    				format = lspkind.cmp_format({
+      					mode = 'symbol', -- show only symbol annotations
+      					maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+                     				   -- can also be a function to dynamically calculate max width such as 
+                     				   -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
+      					ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+      					show_labelDetails = true, -- show labelDetails in menu. Disabled by default
+
+      					-- The function below will be called before any actual modifications from lspkind
+      					-- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+      					before = function (entry, vim_item)
+        					return vim_item
+      					end
+    				})
+  				}
 			})
 		end,
 	},
+
+	-- { -- You can easily change to a different colorscheme.
+	-- 	-- Change the name of the colorscheme plugin below, and then
+	-- 	-- change the command in the config to whatever the name of that colorscheme is
+	-- 	--
+	-- 	-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`
+	-- 	"folke/tokyonight.nvim",
+	-- 	priority = 1000, -- make sure to load this before all the other start plugins
+	-- 	init = function()
+	-- 		-- Load the colorscheme here.
+	-- 		-- Like many other themes, this one has different styles, and you could load
+	-- 		-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+	-- 		vim.cmd.colorscheme("tokyonight-night")
+
+	-- 		-- You can configure highlights by doing something like
+	-- 		vim.cmd.hi("Comment gui=none")
+	-- 	end,
+	-- },
 
 	{ -- You can easily change to a different colorscheme.
 		-- Change the name of the colorscheme plugin below, and then
@@ -558,6 +597,7 @@ require("lazy").setup({
 			vim.cmd.hi("Comment gui=none")
 		end,
 	},
+
 
 	-- Highlight todo, notes, etc in comments
 	{
