@@ -1,5 +1,4 @@
-#!/usr/bin/env zsh
-
+#!/bin/zsh
 
 # Credit: woefe/dotfiles
 
@@ -22,10 +21,7 @@ if [[ ! -d $CONFIGDIR ]]; then
   echo "Creating directory: $CONFIGDIR"
   mkdir -p $CONFIGDIR
 fi
-
-#########################################################################
-
-
+###################### Boilerplate and preparation ######################
 
 ############################# How to use it #############################
 #                                                                       #
